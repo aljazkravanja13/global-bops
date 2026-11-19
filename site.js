@@ -10,7 +10,8 @@ window.addEventListener('error', e => report('ERR: ' + e.message + ' @' + (e.lin
 window.addEventListener('unhandledrejection', e => report('REJ: ' + (e.reason && e.reason.message || e.reason)));
 // ===== embedded data =====
 const PNG_URI = 'data/map.png';
-const GRID_GZ = window.GRID_GZ;
+const GRID_IDS_DATA = window.GRID_IDS;
+const GRID_B64 = window.GRID_B64;
 const COUNTRIES = window.COUNTRIES;
 const ISO3_TO_ISO2 = {   "ABW": "AW", "AFG": "AF", "AGO": "AO", "AIA": "AI", "ALB": "AL", "ALD": "AX",   "AND": "AD", "ARE": "AE", "ARG": "AR", "ARM": "AM", "ASM": "AS", "ATA": "AQ",   "ATC": "AU", "ATF": "TF", "ATG": "AG", "AUS": "AU", "AUT": "AT", "AZE": "AZ",   "BDI": "BI", "BEL": "BE", "BEN": "BJ", "BFA": "BF", "BGD": "BD", "BGR": "BG",   "BHR": "BH", "BHS": "BS", "BIH": "BA", "BLM": "BL", "BLR": "BY", "BLZ": "BZ",   "BMU": "BM", "BOL": "BO", "BRA": "BR", "BRB": "BB", "BRN": "BN", "BTN": "BT",   "BWA": "BW", "CAF": "CF", "CAN": "CA", "CHE": "CH", "CHL": "CL", "CHN": "CN",   "CIV": "CI", "CMR": "CM", "COD": "CD", "COG": "CG", "COK": "CK", "COL": "CO",   "COM": "KM", "CPV": "CV", "CRI": "CR", "CUB": "CU", "CUW": "CW", "CYM": "KY",   "CYP": "CY", "CZE": "CZ", "DEU": "DE", "DJI": "DJ", "DMA": "DM", "DNK": "DK",   "DOM": "DO", "DZA": "DZ", "ECU": "EC", "EGY": "EG", "ERI": "ER", "ESP": "ES",   "EST": "EE", "ETH": "ET", "FIN": "FI", "FJI": "FJ", "FLK": "FK", "FRA": "FR",   "FRO": "FO", "FSM": "FM", "GAB": "GA", "GBR": "GB", "GEO": "GE", "GGY": "GG",   "GHA": "GH", "GIN": "GN", "GMB": "GM", "GNB": "GW", "GNQ": "GQ", "GRC": "GR",   "GRD": "GD", "GRL": "GL", "GTM": "GT", "GUM": "GU", "GUY": "GY", "HKG": "HK",   "HMD": "HM", "HND": "HN", "HRV": "HR", "HTI": "HT", "HUN": "HU", "IDN": "ID",   "IMN": "IM", "IND": "IN", "IOA": "AU", "IOT": "IO", "IRL": "IE", "IRN": "IR",   "IRQ": "IQ", "ISL": "IS", "ISR": "IL", "ITA": "IT", "JAM": "JM", "JEY": "JE",   "JOR": "JO", "JPN": "JP", "KAZ": "KZ", "KEN": "KE", "KGZ": "KG", "KHM": "KH",   "KIR": "KI", "KNA": "KN", "KOR": "KR", "KOS": "XK", "KWT": "KW", "LAO": "LA",   "LBN": "LB", "LBR": "LR", "LBY": "LY", "LCA": "LC", "LIE": "LI", "LKA": "LK",   "LSO": "LS", "LTU": "LT", "LUX": "LU", "LVA": "LV", "MAC": "MO", "MAF": "MF",   "MAR": "MA", "MCO": "MC", "MDA": "MD", "MDG": "MG", "MDV": "MV", "MEX": "MX",   "MHL": "MH", "MKD": "MK", "MLI": "ML", "MLT": "MT", "MMR": "MM", "MNE": "ME",   "MNG": "MN", "MNP": "MP", "MOZ": "MZ", "MRT": "MR", "MSR": "MS", "MUS": "MU",   "MWI": "MW", "MYS": "MY", "NAM": "NA", "NCL": "NC", "NER": "NE", "NFK": "NF",   "NGA": "NG", "NIC": "NI", "NIU": "NU", "NLD": "NL", "NOR": "NO", "NPL": "NP",   "NRU": "NR", "NZL": "NZ", "OMN": "OM", "PAK": "PK", "PAN": "PA", "PCN": "PN",   "PER": "PE", "PHL": "PH", "PLW": "PW", "PNG": "PG", "POL": "PL", "PRI": "PR",   "PRK": "KP", "PRT": "PT", "PRY": "PY", "PSX": "PS", "PYF": "PF", "QAT": "QA",   "ROU": "RO", "RUS": "RU", "RWA": "RW", "SAH": "EH", "SAU": "SA", "SDN": "SD",   "SDS": "SS", "SEN": "SN", "SGP": "SG", "SGS": "GS", "SHN": "SH", "SLB": "SB",   "SLE": "SL", "SLV": "SV", "SMR": "SM", "SOL": "SO", "SOM": "SO", "SPM": "PM",   "SRB": "RS", "STP": "ST", "SUR": "SR", "SVK": "SK", "SVN": "SI", "SWE": "SE",   "SWZ": "SZ", "SXM": "SX", "SYC": "SC", "SYR": "SY", "TCA": "TC", "TCD": "TD",   "TGO": "TG", "THA": "TH", "TJK": "TJ", "TKM": "TM", "TLS": "TL", "TON": "TO",   "TTO": "TT", "TUN": "TN", "TUR": "TR", "TUV": "TV", "TWN": "TW", "TZA": "TZ",   "UGA": "UG", "UKR": "UA", "URY": "UY", "USA": "US", "UZB": "UZ", "VAT": "VA",   "VCT": "VC", "VEN": "VE", "VGB": "VG", "VIR": "VI", "VNM": "VN", "VUT": "VU",   "WLF": "WF", "WSM": "WS", "YEM": "YE", "ZAF": "ZA", "ZMB": "ZM", "ZWE": "ZW"};
 
@@ -25,14 +26,10 @@ function flag(iso2) {
 
 // ===== decompress hit grid =====
 let GRID = null, GRID_IDS = null;
-async function loadGrid() {
-  const bin = Uint8Array.from(atob(GRID_GZ), c => c.charCodeAt(0));
-  const ds = new DecompressionStream('gzip');
-  const stream = new Blob([bin]).stream().pipeThrough(ds);
-  const buf = new Uint8Array(await new Response(stream).arrayBuffer());
-  const sep = buf.indexOf(124); // '|'
-  GRID_IDS = JSON.parse(new TextDecoder().decode(buf.slice(0, sep)));
-  GRID = buf.slice(sep + 1);
+function loadGrid() {
+  // plain base64 -> bytes; ids straight from data/grid.js. Works in every browser.
+  GRID_IDS = GRID_IDS_DATA;
+  GRID = Uint8Array.from(atob(GRID_B64), c => c.charCodeAt(0));
 }
 function gridIso3(u, v) {
   if (!GRID) return null;
@@ -315,8 +312,12 @@ const glPlus = (function () {
   }
   function applyTexture() {
     if (!mips.length) return; // texture attaches on refresh()
+    let mip = mips[0];
+    let mx = 4096;
+    try { if (renderer && renderer.capabilities) mx = renderer.capabilities.maxTextureSize || 4096; } catch (e) {}
+    for (const m of mips) { mip = m; if (m.width <= mx) break; }
     if (texOwn) { texOwn.dispose(); texOwn = null; }
-    texOwn = new T.CanvasTexture(mips[0]);
+    texOwn = new T.CanvasTexture(mip);
     texOwn.anisotropy = 1;
     if (mesh) { group.remove(mesh); mesh.geometry.dispose(); mesh.material.dispose(); mesh = null; }
     const geo = new T.SphereGeometry(1, 128, 64);
@@ -397,10 +398,19 @@ const glPlus = (function () {
     if (mode === 'three') { try { drawThree(); } catch (e) { draw2D(); } }
     else if (mode === '2d') draw2D();
   }
+  let drawErrOnce = false;
   function raf() {
     if (MODE === 'globe') {
       if (spinning) yaw += 0.0016;
-      draw();
+      try { draw(); }
+      catch (e) {
+        if (!drawErrOnce) {
+          drawErrOnce = true;
+          if (location.protocol === 'file:')
+            report('globe texture error: opened from file://. Serve the folder over http (see README) and the globe texture will render.');
+          else report('globe error: ' + (e.message || e));
+        }
+      }
     }
     requestAnimationFrame(raf);
   }
@@ -550,8 +560,4 @@ cselect.onchange = () => {
 
 // ---- boot ----
 resize();
-(async () => {
-  await loadGrid();
-  resize();
-  setMode('globe');
-})();
+loadGrid(); resize(); setMode('globe');
