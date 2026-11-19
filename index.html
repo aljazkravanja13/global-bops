@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Global Bops</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header>
+  <h1>Global <span class="bops">Bops</span></h1>
+  <p class="tagline">one song. one artist. every country.</p>
+</header>
+<nav id="tabs">
+  <button class="tab" data-page="about">About the Project</button>
+  <button class="tab" data-page="playlist">Full Playlist</button>
+  <button class="tab active" data-page="explore">Explore</button>
+  <button class="tab" data-page="ai">AI Disclaimer</button>
+  <button class="tab" data-page="more">More</button>
+</nav>
+<main>
+  <section class="page" id="page-about">
+    <h2>About the Project</h2>
+    <p><b>Global Bops</b> is a hand-curated musical tour of the planet: for every country in the
+    world, one artist and one song that captures something essential about the place, chosen one
+    country at a time, by ear, not by algorithm.</p>
+    <h3>How it works</h3>
+    <p>Head to <b>Explore</b> and click any country on the map or the globe. Curated countries open a
+    card with the artist, the song and a link to find it on Spotify. The rest say
+    <i>not curated yet</i> — they light up as the collection grows, so it pays to come back.</p>
+    <p class="pct">Curated so far: <b id="about-count"></b> of " + COUNTRIES.length + " countries.</p>
+    <h3>The artwork</h3>
+    <p>The map is hand-drawn. It is wrapped onto a real 3D globe for the Explore view — spin it,
+    zoom it, and go anywhere.</p>
+  </section>
+  <section class="page" id="page-playlist">
+    <h2>Full Playlist</h2>
+    <p class="muted">The full Spotify playlist is coming once more countries are curated. Until
+    then, these are the songs in the collection so far — the same ones you will find on the map.</p>
+    <ul id="plist"></ul>
+  </section>
+  <section class="page active" id="page-explore">
+    <div class="explore-bar">
+      <div class="mode">
+        <button id="m-map">Flat Map</button>
+        <button id="m-globe" class="on">Globe</button>
+      </div>
+      <select id="cselect" aria-label="Choose a country"><option value="">Choose a country &#8230;</option></select>
+      <button id="surprise" class="surprise">&#127922; Surprise me</button>
+    </div>
+    <div class="stage" id="stage">
+      <canvas id="view" style="display:none"></canvas>
+      <canvas id="gview"></canvas>
+      <div id="glerr" style="position:absolute;inset:0;display:none;place-items:center;color:#A83E3E;font-weight:600;z-index:4;"></div>
+      <div class="tip" id="tip"></div>
+      <div class="detail" id="detail"></div>
+    </div>
+    <p class="hint" id="hint">Click a country for its song. Drag to spin the globe, scroll to zoom.</p>
+  </section>
+  <section class="page" id="page-ai">
+    <h2>AI Disclaimer</h2>
+    <p>This site is built with AI assistance: the code for the map and globe experiences, and early
+    drafts of country notes and song write-ups, were produced with the help of AI tools.</p>
+    <p>Every pick is then curated — kept, changed or rejected — by a human. Still, choose with
+    your own ears and verify artists’ origin and credits before sharing anything as fact. If a
+    pick looks wrong for a country, it probably is; tell us and it will be re-listened to.</p>
+  </section>
+  <section class="page" id="page-more">
+    <h2>More</h2>
+    <p>Curated so far: <b id="more-count"></b> of " + COUNTRIES.length + " countries. Follow along as more countries
+    light up.</p>
+    <h3>Credits</h3>
+    <p>Map artwork: hand-drawn by Aljaž. Country shapes under the hood: Natural Earth (public
+    domain). 3D globe: three.js r128 (MIT). Built with AI assistance.</p>
+    <h3>Palette</h3>
+    <div class="swatches">
+      <div class="sw" style="background:#44652F"><label>olive</label></div>
+      <div class="sw" style="background:#7D9E57"><label>sage</label></div>
+      <div class="sw" style="background:#53A596"><label>teal</label></div>
+      <div class="sw" style="background:#2C5266"><label>slate</label></div>
+      <div class="sw" style="background:#E29C62"><label>tan</label></div>
+      <div class="sw" style="background:#A83E3E"><label>brick</label></div>
+    </div>
+  </section>
+</main>
+<div id="errbar"></div>
+<script src="vendor/three.min.js"></script>
+<script src="data/countries.js"></script>
+<script src="data/grid.js"></script>
+<script src="site.js"></script>
+</body>
+</html>
