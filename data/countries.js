@@ -1,8 +1,10 @@
 // ============================================================
 // COUNTRY DATA - one line per country
-// [iso2, name, lat, lon, artist, song, genre, playlistId]
+// [iso2, name, lat, lon, artist, song, genre, spotify, note]
 //   artist/song/genre: null until curated (row[4], row[5], row[6])
-//   playlistId: Spotify playlist id (part after /playlist/) or null
+//   spotify: full open.spotify.com link (track/album/playlist) or null
+//   note: short comment shown on the card (row[8], new)
+
 // Curated countries light up on the site automatically.
 // ============================================================
 
@@ -154,7 +156,7 @@ window.COUNTRIES = [
   // --- Europe ---
   ["AL","Albania",41,20,null,null,null,null],
   ["AD","Andorra",42.5,1.5,null,null,null,null],
-  ["AT","Austria",47.5,14.5,null,null,null,null],
+  ["AT","Austria",47.5,14.5,"Falco","Helden von Heute","New Wave","https://open.spotify.com/embed/track/3gFLIsMbRULAiO9KvGjUfA?utm_source=generator&si=64f4590e40eb458b",null],
   ["BY","Belarus",53,28,null,null,null,null],
   ["BE","Belgium",50.8,4.5,null,null,null,null],
   ["BA","Bosnia and Herzegovina",44,18,null,null,null,null],
