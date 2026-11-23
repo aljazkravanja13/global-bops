@@ -9,9 +9,11 @@ function report(msg) {
 window.addEventListener('error', e => report('ERR: ' + e.message + ' @' + (e.lineno||'?')));
 window.addEventListener('unhandledrejection', e => report('REJ: ' + (e.reason && e.reason.message || e.reason)));
 // ===== embedded data =====
-const PNG_URI = 'data/map.png';
-const GRID_GZ = window.GRID_GZ;
+const PNG_URI = 'data:image/png;base64,' + (window.MAP_PNG_B64 || '');
+const GRID_IDS_DATA = window.GRID_IDS;
+const GRID_B64 = window.GRID_B64;
 const COUNTRIES = window.COUNTRIES;
+const HOTSPOTS = window.HOTSPOTS || [];
 const ISO3_TO_ISO2 = {   "ABW": "AW", "AFG": "AF", "AGO": "AO", "AIA": "AI", "ALB": "AL", "ALD": "AX",   "AND": "AD", "ARE": "AE", "ARG": "AR", "ARM": "AM", "ASM": "AS", "ATA": "AQ",   "ATC": "AU", "ATF": "TF", "ATG": "AG", "AUS": "AU", "AUT": "AT", "AZE": "AZ",   "BDI": "BI", "BEL": "BE", "BEN": "BJ", "BFA": "BF", "BGD": "BD", "BGR": "BG",   "BHR": "BH", "BHS": "BS", "BIH": "BA", "BLM": "BL", "BLR": "BY", "BLZ": "BZ",   "BMU": "BM", "BOL": "BO", "BRA": "BR", "BRB": "BB", "BRN": "BN", "BTN": "BT",   "BWA": "BW", "CAF": "CF", "CAN": "CA", "CHE": "CH", "CHL": "CL", "CHN": "CN",   "CIV": "CI", "CMR": "CM", "COD": "CD", "COG": "CG", "COK": "CK", "COL": "CO",   "COM": "KM", "CPV": "CV", "CRI": "CR", "CUB": "CU", "CUW": "CW", "CYM": "KY",   "CYP": "CY", "CZE": "CZ", "DEU": "DE", "DJI": "DJ", "DMA": "DM", "DNK": "DK",   "DOM": "DO", "DZA": "DZ", "ECU": "EC", "EGY": "EG", "ERI": "ER", "ESP": "ES",   "EST": "EE", "ETH": "ET", "FIN": "FI", "FJI": "FJ", "FLK": "FK", "FRA": "FR",   "FRO": "FO", "FSM": "FM", "GAB": "GA", "GBR": "GB", "GEO": "GE", "GGY": "GG",   "GHA": "GH", "GIN": "GN", "GMB": "GM", "GNB": "GW", "GNQ": "GQ", "GRC": "GR",   "GRD": "GD", "GRL": "GL", "GTM": "GT", "GUM": "GU", "GUY": "GY", "HKG": "HK",   "HMD": "HM", "HND": "HN", "HRV": "HR", "HTI": "HT", "HUN": "HU", "IDN": "ID",   "IMN": "IM", "IND": "IN", "IOA": "AU", "IOT": "IO", "IRL": "IE", "IRN": "IR",   "IRQ": "IQ", "ISL": "IS", "ISR": "IL", "ITA": "IT", "JAM": "JM", "JEY": "JE",   "JOR": "JO", "JPN": "JP", "KAZ": "KZ", "KEN": "KE", "KGZ": "KG", "KHM": "KH",   "KIR": "KI", "KNA": "KN", "KOR": "KR", "KOS": "XK", "KWT": "KW", "LAO": "LA",   "LBN": "LB", "LBR": "LR", "LBY": "LY", "LCA": "LC", "LIE": "LI", "LKA": "LK",   "LSO": "LS", "LTU": "LT", "LUX": "LU", "LVA": "LV", "MAC": "MO", "MAF": "MF",   "MAR": "MA", "MCO": "MC", "MDA": "MD", "MDG": "MG", "MDV": "MV", "MEX": "MX",   "MHL": "MH", "MKD": "MK", "MLI": "ML", "MLT": "MT", "MMR": "MM", "MNE": "ME",   "MNG": "MN", "MNP": "MP", "MOZ": "MZ", "MRT": "MR", "MSR": "MS", "MUS": "MU",   "MWI": "MW", "MYS": "MY", "NAM": "NA", "NCL": "NC", "NER": "NE", "NFK": "NF",   "NGA": "NG", "NIC": "NI", "NIU": "NU", "NLD": "NL", "NOR": "NO", "NPL": "NP",   "NRU": "NR", "NZL": "NZ", "OMN": "OM", "PAK": "PK", "PAN": "PA", "PCN": "PN",   "PER": "PE", "PHL": "PH", "PLW": "PW", "PNG": "PG", "POL": "PL", "PRI": "PR",   "PRK": "KP", "PRT": "PT", "PRY": "PY", "PSX": "PS", "PYF": "PF", "QAT": "QA",   "ROU": "RO", "RUS": "RU", "RWA": "RW", "SAH": "EH", "SAU": "SA", "SDN": "SD",   "SDS": "SS", "SEN": "SN", "SGP": "SG", "SGS": "GS", "SHN": "SH", "SLB": "SB",   "SLE": "SL", "SLV": "SV", "SMR": "SM", "SOL": "SO", "SOM": "SO", "SPM": "PM",   "SRB": "RS", "STP": "ST", "SUR": "SR", "SVK": "SK", "SVN": "SI", "SWE": "SE",   "SWZ": "SZ", "SXM": "SX", "SYC": "SC", "SYR": "SY", "TCA": "TC", "TCD": "TD",   "TGO": "TG", "THA": "TH", "TJK": "TJ", "TKM": "TM", "TLS": "TL", "TON": "TO",   "TTO": "TT", "TUN": "TN", "TUR": "TR", "TUV": "TV", "TWN": "TW", "TZA": "TZ",   "UGA": "UG", "UKR": "UA", "URY": "UY", "USA": "US", "UZB": "UZ", "VAT": "VA",   "VCT": "VC", "VEN": "VE", "VGB": "VG", "VIR": "VI", "VNM": "VN", "VUT": "VU",   "WLF": "WF", "WSM": "WS", "YEM": "YE", "ZAF": "ZA", "ZMB": "ZM", "ZWE": "ZW"};
 
 const W = 2048, H = 1024, GRID_W = 512, GRID_H = 256;
@@ -25,14 +27,10 @@ function flag(iso2) {
 
 // ===== decompress hit grid =====
 let GRID = null, GRID_IDS = null;
-async function loadGrid() {
-  const bin = Uint8Array.from(atob(GRID_GZ), c => c.charCodeAt(0));
-  const ds = new DecompressionStream('gzip');
-  const stream = new Blob([bin]).stream().pipeThrough(ds);
-  const buf = new Uint8Array(await new Response(stream).arrayBuffer());
-  const sep = buf.indexOf(124); // '|'
-  GRID_IDS = JSON.parse(new TextDecoder().decode(buf.slice(0, sep)));
-  GRID = buf.slice(sep + 1);
+function loadGrid() {
+  // plain base64 -> bytes; ids straight from data/grid.js. Works in every browser.
+  GRID_IDS = GRID_IDS_DATA;
+  GRID = Uint8Array.from(atob(GRID_B64), c => c.charCodeAt(0));
 }
 function gridIso3(u, v) {
   if (!GRID) return null;
@@ -64,6 +62,16 @@ function countryAt(u, v) {
 
 // ===== detail card =====
 const detail = document.getElementById('detail');
+// embedded Spotify player when a direct URL is given, else a search link
+function spotifyBlock(artist, title, url) {
+  const m = url && url.match(/open\.spotify\.com\/(track|album|playlist|episode|show)\/([A-Za-z0-9]+)/);
+  if (m) {
+    return '<iframe class="embed" src="https://open.spotify.com/embed/' + m[1] + '/' + m[2]
+      + '" width="100%" height="152" frameborder="0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify player"></iframe>';
+  }
+  return '<a class="link" target="_blank" rel="noopener" href="https://open.spotify.com/search/'
+    + encodeURIComponent(artist + ' ' + title) + '">Find on Spotify</a>';
+}
 function showDetail(r) {
   if (!r) return;
   const row = Array.isArray(r) ? r : null;
@@ -74,13 +82,43 @@ function showDetail(r) {
       + '<h3>' + flag(row[0]) + ' ' + row[1] + '</h3>'
       + '<div class="song">' + row[4] + ' &#8212; ' + row[5] + '</div>'
       + (row[6] ? '<div class="genre">' + row[6] + '</div>' : '')
-      + '<a class="link" target="_blank" rel="noopener" href="https://open.spotify.com/search/'
-      + encodeURIComponent(row[4] + ' ' + row[5]) + '">Find on Spotify</a>';
+      + spotifyBlock(row[4], row[5], row[7]);
   } else {
     detail.innerHTML = '<span class="x" onclick="this.parentElement.style.display=\'none\'">&#10005;</span>'
       + '<h3>' + flag(row[0]) + ' ' + row[1] + '</h3>'
       + '<div class="empty">Not curated yet &#8212; check back soon!</div>';
   }
+}
+
+function showSatCard() {
+  detail.style.display = 'block';
+  detail.innerHTML = '<span class="x" onclick="this.parentElement.style.display=\'none\'">&#10005;</span>'
+    + '<h3>\u{1F6F0}\uFE0E Satellite</h3>'
+    + '<div class="song">Brian Eno &#8212; An Ending (Ascent)</div>'
+    + '<div class="genre">Ambient</div>'
+    + spotifyBlock('Brian Eno', 'An Ending (Ascent)', 'https://open.spotify.com/track/27ORuOiflgdGOnNbK4QBDu');
+}
+
+// ===== non-country hotspots (drawn map elements with songs) =====
+function hotspotAt(u, v) {
+  const lon = u * 360 - 180, lat = 90 - v * 180;
+  for (const h of HOTSPOTS) {
+    if (h.lon !== undefined) {
+      const dLat = lat - h.lat;
+      const dLon = ((lon - h.lon + 540) % 360) - 180;
+      const dx = dLon * Math.cos(h.lat * Math.PI / 180);
+      if (Math.sqrt(dx * dx + dLat * dLat) <= (h.radiusDeg || 1)) return h;
+    } else if (lon >= h.lonMin && lon <= h.lonMax && lat >= h.latMin && lat <= h.latMax) return h;
+  }
+  return null;
+}
+function showSpotCard(h) {
+  detail.style.display = 'block';
+  detail.innerHTML = '<span class="x" onclick="this.parentElement.style.display=\'none\'">&#10005;</span>'
+    + '<h3>' + (h.emoji ? h.emoji + ' ' : '') + h.name + '</h3>'
+    + '<div class="song">' + h.artist + ' &#8212; ' + h.title + '</div>'
+    + (h.genre ? '<div class="genre">' + h.genre + '</div>' : '')
+    + spotifyBlock(h.artist, h.title, h.spotify);
 }
 
 // ===== tooltip =====
@@ -105,11 +143,13 @@ texImg.onload = () => {
 };
 texImg.src = PNG_URI;
 // stepwise mipmap chain for clean downscaled dot rendering
+// (first mip capped at 4096: iOS canvases over ~16Mpx silently fail)
 function buildMips() {
   mips = [];
+  const w0 = Math.min(texImg.width, 4096);
   let c = document.createElement('canvas');
-  c.width = texImg.width; c.height = texImg.height;
-  c.getContext('2d').drawImage(texImg, 0, 0);
+  c.width = w0; c.height = Math.round(texImg.height * (w0 / texImg.width));
+  c.getContext('2d').drawImage(texImg, 0, 0, c.width, c.height);
   mips.push(c);
   while (c.width > 256) {
     const n = document.createElement('canvas');
@@ -189,16 +229,46 @@ function showTipHit(hit) {
   return c;
 }
 
-// pointer events (shared by both modes for drag)
+// pointer events (shared by both modes): one-finger drag + two-finger pinch
+const tp = new Map();
+let pinchDist = 0;
+function tDist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+function mapPinch(sx, sy, f) {
+  const [mx, my] = screenToMap(sx, sy);
+  zoom = Math.min(12, Math.max(0.8, zoom * f));
+  const cw = view.width, ch = view.height;
+  const s = Math.max(cw / W, ch / H) * zoom; // scale after zoom change
+  panX = (sx - mx * s) - (cw - W * s) / 2;
+  panY = (sy - my * s) - (ch - H * s) / 2;
+  draw();
+}
 [view,gview].forEach(c => c.addEventListener('pointerdown', e => {
+  tp.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (tp.size === 2) { const [a, b] = [...tp.values()]; pinchDist = tDist(a, b); moved = true; }
   dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY;
   c.setPointerCapture(e.pointerId);
 }));
-[view,gview].forEach(c => c.addEventListener('pointerup', e => {
+['pointerup', 'pointercancel'].forEach(t => [view,gview].forEach(c => c.addEventListener(t, e => {
+  tp.delete(e.pointerId);
+  if (tp.size < 2) pinchDist = 0;
   const wasDrag = moved; dragging = false;
-  if (!wasDrag) handleClick(e);
-}));
+  if (t === 'pointerup' && !wasDrag && tp.size === 0) handleClick(e);
+})));
 [view,gview].forEach(c => c.addEventListener('pointermove', e => {
+  if (tp.has(e.pointerId)) tp.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (tp.size >= 2 && pinchDist > 0) {           // two fingers: pinch zoom
+    const [a, b] = [...tp.values()];
+    const d = tDist(a, b);
+    if (d > 0) {
+      const f = d / pinchDist; pinchDist = d;
+      if (MODE === 'map') {
+        const r = stage.getBoundingClientRect();
+        const dpr = view.width / r.width;
+        mapPinch(((a.x + b.x) / 2 - r.left) * dpr, ((a.y + b.y) / 2 - r.top) * dpr, f);
+      } else glPlus.pinch(f);
+    }
+    return;                                       // pinch never pans or clicks
+  }
   if (dragging) {
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     lastX = e.clientX; lastY = e.clientY;
@@ -222,17 +292,57 @@ function handleClick(e) {
   if (MODE === 'map') {
     const hit = mapHit(e);
     if (!hit) return;
+    const h = hotspotAt(hit.u, hit.v);
+    if (h) { showSpotCard(h); return; }
     const c = countryAt(hit.u, hit.v);
     if (c) showDetail(c);
   } else {
+    const s = glPlus.hitSatellite(e);
+    if (s) { showSatCard(); return; }
+    const p = glPlus.hitUV(e);
+    if (!p) return;
+    const h = hotspotAt(p.u, p.v);
+    if (h) { showSpotCard(h); return; }
     const c = glPlus.hitCountry(e);
     if (c) showDetail(c);
   }
 }
 function handleHover(e) {
   if (MODE === 'map') {
-    showTipHit(mapHit(e));
+    const hit = mapHit(e);
+    const h = hit && hotspotAt(hit.u, hit.v);
+    if (h) {
+      const r2 = view.getBoundingClientRect();
+      tip.textContent = (h.emoji ? h.emoji + ' ' : '') + h.name;
+      tip.style.display = 'block';
+      if (hit.sx !== undefined) {
+        const sd = view.width / r2.width;
+        tip.style.left = (hit.sx / sd + 14) + 'px';
+        tip.style.top = (hit.sy / sd - 10) + 'px';
+      }
+      return;
+    }
+    showTipHit(hit);
   } else {
+    const sat = glPlus.hitSatellite(e);
+    if (sat) {
+      const r = view.getBoundingClientRect();
+      tip.textContent = '🛰︎ Brian Eno — An Ending (Ascent)';
+      tip.style.display = 'block';
+      tip.style.left = (e.clientX - r.left + 14) + 'px';
+      tip.style.top = (e.clientY - r.top - 10) + 'px';
+      return;
+    }
+    const p = glPlus.hitUV(e);
+    const h = p && hotspotAt(p.u, p.v);
+    if (h) {
+      const r = view.getBoundingClientRect();
+      tip.textContent = (h.emoji ? h.emoji + ' ' : '') + h.name;
+      tip.style.display = 'block';
+      tip.style.left = (e.clientX - r.left + 14) + 'px';
+      tip.style.top = (e.clientY - r.top - 10) + 'px';
+      return;
+    }
     const c = glPlus.hitCountry(e, true);
     if (c) {
       const r = view.getBoundingClientRect();
@@ -310,14 +420,47 @@ const glPlus = (function () {
     camera.position.z = dist;
     group = new T.Group();
     scene.add(group);
+    initSatellite();
     applyTexture();
     addSpinToGroup();
   }
+  // ---------- satellite (2D sprite orbiting the globe) ----------
+  let satellite = null;
+  function initSatellite() {
+    const sc = document.createElement('canvas');
+    sc.width = 64; sc.height = 64;
+    const g = sc.getContext('2d');
+    g.fillStyle = '#c8d2dc'; g.fillRect(26, 28, 12, 8);            // body
+    g.fillStyle = '#2f6bb0'; g.fillRect(5, 30, 17, 4);             // left panel
+    g.fillStyle = '#2f6bb0'; g.fillRect(42, 30, 17, 4);            // right panel
+    g.strokeStyle = '#8fa2b5'; g.lineWidth = 1.5;
+    g.beginPath(); g.moveTo(22, 32); g.lineTo(26, 32); g.moveTo(38, 32); g.lineTo(42, 32); g.stroke(); // struts
+    g.fillStyle = '#ffffff'; g.fillRect(30, 36, 4, 3);             // dish
+    const tex = new T.CanvasTexture(sc); tex.needsUpdate = true;
+    satellite = new T.Sprite(new T.SpriteMaterial({ map: tex }));
+    satellite.scale.set(0.18, 0.18, 1);
+    scene.add(satellite); // in scene, not group: orbits independently of globe spin
+  }
+  function moveSatellite() {
+    if (!satellite) return;
+    const t = Date.now() * 0.0004;           // slow orbit
+    const r = 1.55, inc = 0.45;              // orbital radius + tilt
+    satellite.position.set(
+      r * Math.cos(t),
+      r * Math.sin(t) * Math.sin(inc),
+      r * Math.sin(t) * Math.cos(inc));
+  }
   function applyTexture() {
     if (!mips.length) return; // texture attaches on refresh()
+    let mx = 4096;
+    try { if (renderer && renderer.capabilities) mx = renderer.capabilities.maxTextureSize || 4096; } catch (e) {}
+    // full-res image straight to the GPU when it fits (8192 on capable desktops)
+    let src = null;
+    if (texImg.width <= mx) src = texImg;
+    else { src = mips[0]; for (const m of mips) { src = m; if (m.width <= mx) break; } }
     if (texOwn) { texOwn.dispose(); texOwn = null; }
-    texOwn = new T.CanvasTexture(mips[0]);
-    texOwn.anisotropy = 1;
+    texOwn = new T.CanvasTexture(src);
+    try { texOwn.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1; } catch (e) { texOwn.anisotropy = 1; }
     if (mesh) { group.remove(mesh); mesh.geometry.dispose(); mesh.material.dispose(); mesh = null; }
     const geo = new T.SphereGeometry(1, 128, 64);
     const mat = new T.MeshBasicMaterial({ map: texOwn });
@@ -341,6 +484,7 @@ const glPlus = (function () {
     camera.updateProjectionMatrix();
     camera.position.z = dist;
     addSpinToGroup();
+    moveSatellite();
     renderer.render(scene, camera);
   }
 
@@ -397,10 +541,19 @@ const glPlus = (function () {
     if (mode === 'three') { try { drawThree(); } catch (e) { draw2D(); } }
     else if (mode === '2d') draw2D();
   }
+  let drawErrOnce = false;
   function raf() {
     if (MODE === 'globe') {
       if (spinning) yaw += 0.0016;
-      draw();
+      try { draw(); }
+      catch (e) {
+        if (!drawErrOnce) {
+          drawErrOnce = true;
+          if (location.protocol === 'file:')
+            report('globe texture error: opened from file://. Serve the folder over http (see README) and the globe texture will render.');
+          else report('globe error: ' + (e.message || e));
+        }
+      }
     }
     requestAnimationFrame(raf);
   }
@@ -446,6 +599,28 @@ const glPlus = (function () {
       dist = 1.7;
       draw();
     },
+    pinch(f) {
+      spinning = false;
+      dist = Math.max(1.35, Math.min(5, dist / f));
+      draw();
+    },
+    hitUV(e) {
+      if (!ready) return null;
+      const r = gview.getBoundingClientRect();
+      const ndcX = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ndcY = 1 - ((e.clientY - r.top) / r.height) * 2;
+      return pickUV(ndcX, ndcY);
+    },
+    hitSatellite(e) {
+      if (mode !== 'three' || !satellite || !ready || !mesh) return null;
+      const r = gview.getBoundingClientRect();
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ny = 1 - ((e.clientY - r.top) / r.height) * 2;
+      const rc = new T.Raycaster();
+      rc.setFromCamera({ x: nx, y: ny }, camera);
+      const hits = rc.intersectObjects([satellite, mesh]);
+      return (hits.length && hits[0].object === satellite) ? hits[0].object : null;
+    },
     hitCountry(e, hoverOnly) {
       if (!ready) return null;
       const r = gview.getBoundingClientRect();
@@ -480,6 +655,20 @@ mProdGlobe.onclick = () => setMode('globe');
 
 // ---- tab pages ----
 const tabs = document.querySelectorAll('.tab');
+// ---- mobile hamburger drawer ----
+const menuBtn = document.getElementById('menuBtn');
+const tabsNav = document.getElementById('tabs');
+function closeMenu() {
+  tabsNav.classList.remove('open');
+  menuBtn.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+}
+menuBtn.onclick = () => {
+  const open = tabsNav.classList.toggle('open');
+  menuBtn.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+};
+tabsNav.addEventListener('click', e => { if (e.target.classList.contains('tab')) closeMenu(); });
 function showPage(name) {
   tabs.forEach(t => t.classList.toggle('active', t.dataset.page === name));
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
@@ -550,8 +739,4 @@ cselect.onchange = () => {
 
 // ---- boot ----
 resize();
-(async () => {
-  await loadGrid();
-  resize();
-  setMode('globe');
-})();
+loadGrid(); resize(); setMode('globe');
