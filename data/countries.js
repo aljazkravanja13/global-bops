@@ -1,25 +1,27 @@
 // ============================================================
 // COUNTRY DATA - one line per country
-// [iso2, name, lat, lon, artist, song, genre, playlistId]
+// [iso2, name, lat, lon, artist, song, genre, spotify, note]
 //   artist/song/genre: null until curated (row[4], row[5], row[6])
-//   playlistId: Spotify playlist id (part after /playlist/) or null
+//   spotify: full open.spotify.com link (track/album/playlist) or null
+//   note: short comment shown on the card (row[8], new)
+
 // Curated countries light up on the site automatically.
 // ============================================================
 
 window.COUNTRIES = [
   // --- Africa ---
-  ["DZ","Algeria",28,2.6,null,null,null,null],
+  ["DZ","Algeria",28,2.6,"Rachid Taha","Ecoute Moi Camerade",null,null],
   ["AO","Angola",-12.5,17.5,null,null,null,null],
   ["BJ","Benin",9.5,2.3,null,null,null,null],
   ["BW","Botswana",-22,24,null,null,null,null],
-  ["BF","Burkina Faso",12.3,-1.6,null,null,null,null],
+  ["BF","Burkina Faso",12.3,-1.6,"Amadou Balaké","Whisky et Coca-Cola",null,null],
   ["BI","Burundi",-3.4,29.9,null,null,null,null],
   ["CV","Cabo Verde",16.5,-24,null,null,null,null],
   ["CM","Cameroon",5.7,12.7,null,null,null,null],
   ["CF","Central African Republic",6.6,20.9,null,null,null,null],
   ["TD","Chad",15.4,18.7,null,null,null,null],
   ["KM","Comoros",-11.7,43.3,null,null,null,null],
-  ["CG","Congo",-0.8,15.8,null,null,null,null],
+  ["CG","Congo",-0.8,15.8,"Petelo Vicka","Sungu Lubuka",null,null],
   ["CD","DR Congo",-2.9,23.6,null,null,null,null],
   ["CI","Côte d'Ivoire",7.6,-5.6,null,null,null,null],
   ["DJ","Djibouti",11.7,42.6,null,null,null,null],
@@ -46,7 +48,7 @@ window.COUNTRIES = [
   ["MZ","Mozambique",-17,35,null,null,null,null],
   ["NA","Namibia",-22,17,null,null,null,null],
   ["NE","Niger",17.6,8.1,null,null,null,null],
-  ["NG","Nigeria",9.1,8.7,"Burna Boy","Last Last","Afrobeats",null],
+  ["NG","Nigeria",9.1,8.7,"William Onyeabor","I Need You All My Life","A",null],
   ["RW","Rwanda",-2,29.9,null,null,null,null],
   ["ST","São Tomé and Príncipe",0.2,6.6,null,null,null,null],
   ["SN","Senegal",14.5,-14.5,null,null,null,null],
@@ -154,9 +156,9 @@ window.COUNTRIES = [
   // --- Europe ---
   ["AL","Albania",41,20,null,null,null,null],
   ["AD","Andorra",42.5,1.5,null,null,null,null],
-  ["AT","Austria",47.5,14.5,null,null,null,null],
+  ["AT","Austria",47.5,14.5,"Falco","Helden von Heute","New Wave","https://open.spotify.com/embed/track/3gFLIsMbRULAiO9KvGjUfA?utm_source=generator&si=64f4590e40eb458b",null],
   ["BY","Belarus",53,28,null,null,null,null],
-  ["BE","Belgium",50.8,4.5,null,null,null,null],
+  ["BE","Belgium",50.8,4.5,"Miel Cools","Kom Uit de Kring",null,null],
   ["BA","Bosnia and Herzegovina",44,18,null,null,null,null],
   ["BG","Bulgaria",43,25,null,null,null,null],
   ["HR","Croatia",45.5,16,null,null,null,null],
