@@ -1,5 +1,27 @@
 
-  :root { font-family: 'Segoe UI', system-ui, sans-serif; }
+@font-face {
+  font-family: 'DIN 1451';
+  src: url('/fonts/din1451-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 1451';
+  src: url('/fonts/din1451-bold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN 1451';
+  src: url('/fonts/din1451-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root { font-family: 'DIN 1451', 'Segoe UI', system-ui, sans-serif; }
+button, select, input, textarea { font-family: inherit; }
+
+
   * { box-sizing: border-box; }
   body { margin: 0; background: #ffffff; color: #2C5266; min-height: 100vh; display: flex; flex-direction: column; }
   header { padding: 22px 16px 4px; max-width: 1200px; margin: 0 auto; width: 100%; text-align: center; }
