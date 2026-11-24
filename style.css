@@ -25,22 +25,22 @@ button, select, input, textarea { font-family: inherit; }
   * { box-sizing: border-box; }
   body { margin: 0; background: #ffffff; color: #2C5266; min-height: 100vh; display: flex; flex-direction: column; }
   header { padding: 22px 16px 4px; max-width: 1200px; margin: 0 auto; width: 100%; text-align: center; }
-  h1 { letter-spacing: 4px; margin: 0 0 2px; text-transform: uppercase; font-size: 32px; color: #44652F; }
-  h1 .bops { color: #A83E3E; }
-  .tagline { font-size: 13px; color: #44652F; margin: 0 0 14px; letter-spacing: 1px; }
+  h1 { letter-spacing: 4px; margin: 0 0 2px; text-transform: uppercase; font-size: 64px; color: #44652F; }
+  h1 .bops { color: #2C5266; }
+  .tagline { font-size: 20px; color: #7D9E57; margin: 0 0 14px; letter-spacing: 1px; }
   /* ---- tab bar ---- */
   #tabs { display: flex; justify-content: center; flex-wrap: wrap; border-bottom: 2px solid #2C5266;
-          max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 16px; gap: 2px; }
-  .tab { border: none; background: transparent; color: #2C5266; font-size: 14.5px; font-weight: 600;
-         padding: 8px 18px 10px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
-  .tab:hover { color: #A83E3E; }
-  .tab.active { color: #A83E3E; border-bottom-color: #A83E3E; }
+          max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 22px; gap: 2px; }
+  .tab { border: none; background: transparent; color: #2C5266; font-size: 18px; font-weight: 600;
+         padding: 8px 22px 10px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .tab:hover { color: #53A596; }
+  .tab.active { color: #53A596; border-bottom-color: #2C5266; }
   /* ---- pages ---- */
   .page { display: none; max-width: 900px; width: 100%; margin: 0 auto; padding: 28px 20px 60px; }
   .page.active { display: block; }
   .page h2 { color: #A83E3E; margin: 0 0 14px; font-size: 24px; letter-spacing: 0.5px; }
   .page h3 { color: #2C5266; margin: 22px 0 8px; font-size: 17px; }
-  .page p { font-size: 14.5px; line-height: 1.65; max-width: 640px; }
+  .page p { font-size: 16px; line-height: 1.65; max-width: 640px; }
   .page .muted { color: #44652F; font-style: italic; }
   .pct { color: #44652F; }
   .pct b { color: #A83E3E; }
