@@ -8,10 +8,10 @@
 // "Find on Spotify" search link.
 window.HOTSPOTS = [
   { id: "whale", name: "The Whale", emoji: "\u{1F40B}",
-    lonMin: 88, lonMax: 91, latMin: -52, latMax: -49,
+    lonMin: 86, lonMax: 90, latMin: -51, latMax: -47,
     artist: "Gojira", title: "Flying Whales", genre: "Technical Death Metal", spotify: "" },
   { id: "submarine", name: "Yellow Submarine", emoji: "\u{1F7E1}",
-    lonMin: -30, lonMax: -28, latMin: 52, latMax: 54,
+    lonMin: -31, lonMax: -27, latMin: 52, latMax: 55,
     artist: "The Beatles", title: "Yellow Submarine", genre: "Classic Rock", spotify: "" },
   { id: "ripple", name: "Ripple Rock", emoji: "\u{1FAA8}",
     lon: -125.35, lat: 50.08, radiusDeg: 0.5,
